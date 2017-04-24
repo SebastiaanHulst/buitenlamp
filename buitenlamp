@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DATE=`date +%m%d`
+
+if [ ! -d /opt/buitenlamp/tijden ]
+    then
+        mkdir -p /opt/buitenlamp/tijden
+fi
+
+if [ -e /opt/buitenlamp/tijden/$DATE ]
+    then
+        UIT=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $1}'`
+        AAN=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $2}'`
+        echo $UIT $AAN
+else
+    UIT=`curl -s http://zonsopgang.info|grep Opkomst  |cut -d ">" -f4|cut -d "<" -f1`
+    AAN=`curl -s http://zonsopgang.info|grep Ondergang|cut -d ">" -f4|cut -d "<" -f1`
+    echo $UIT $AAN > /opt/buitenlamp/tijden/$DATE
+    echo $UIT $AAN
+fi
