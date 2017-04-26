@@ -1,6 +1,13 @@
 #!/bin/bash
 
+# set date to something usefull for this script
+
 DATE=`date +%m%d`
+
+# set ON and OFF to max-time
+
+OFF=08:50
+ON=22:10
 
 if [ ! -d /opt/buitenlamp/tijden ]
     then
@@ -9,12 +16,13 @@ fi
 
 if [ -e /opt/buitenlamp/tijden/$DATE ]
     then
-        UIT=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $1}'`
-        AAN=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $2}'`
-        echo $UIT $AAN
+        OFF=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $1}'`
+        ON=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $2}'`
+        echo $ON $OFF
+
 else
-    UIT=`curl -s http://zonsopgang.info|grep Opkomst  |cut -d ">" -f4|cut -d "<" -f1`
-    AAN=`curl -s http://zonsopgang.info|grep Ondergang|cut -d ">" -f4|cut -d "<" -f1`
-    echo $UIT $AAN > /opt/buitenlamp/tijden/$DATE
-    echo $UIT $AAN
+    OFF=`curl -s http://zonsopgang.info|grep Opkomst  |cut -d ">" -f4|cut -d "<" -f1`
+    ON=`curl -s http://zonsopgang.info|grep Ondergang|cut -d ">" -f4|cut -d "<" -f1`
+    echo $OFF $ON > /opt/buitenlamp/tijden/$DATE
+    echo $OFF $ON
 fi
