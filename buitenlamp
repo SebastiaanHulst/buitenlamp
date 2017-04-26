@@ -9,20 +9,29 @@ DATE=`date +%m%d`
 OFF=08:50
 ON=22:10
 
+# check if directory exist; if not, create
+
 if [ ! -d /opt/buitenlamp/tijden ]
     then
         mkdir -p /opt/buitenlamp/tijden
 fi
 
+# check if ON and OFF are on local file
+
 if [ -e /opt/buitenlamp/tijden/$DATE ]
     then
         OFF=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $1}'`
         ON=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $2}'`
-        echo $ON $OFF
+
+# check if sunset times can be found on the interwebs
 
 else
     OFF=`curl -s http://zonsopgang.info|grep Opkomst  |cut -d ">" -f4|cut -d "<" -f1`
     ON=`curl -s http://zonsopgang.info|grep Ondergang|cut -d ">" -f4|cut -d "<" -f1`
     echo $OFF $ON > /opt/buitenlamp/tijden/$DATE
-    echo $OFF $ON
 fi
+
+# set "at" to turn the light off and on
+
+echo "/usr/bin/ch4_off.py"| at -m $OFF
+echo "/usr/bin/ch4_on.py" | at -m $ON
