@@ -11,24 +11,24 @@ ON=22:10
 
 # check if directory exist; if not, create
 
-if [ ! -d /opt/buitenlamp/tijden ]
+if [ ! -d /opt/tijden ]
     then
-        mkdir -p /opt/buitenlamp/tijden
+        mkdir -p /opt/tijden
 fi
 
 # check if ON and OFF are on local file
 
-if [ -e /opt/buitenlamp/tijden/$DATE ]
+if [ -e /opt/tijden/$DATE ]
     then
-        OFF=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $1}'`
-        ON=`cat /opt/buitenlamp/tijden/$DATE|awk '{print $2}'`
+        OFF=`cat /opt/tijden/$DATE|awk '{print $1}'`
+        ON=`cat /opt/tijden/$DATE|awk '{print $2}'`
 
 # check if sunset times can be found on the interwebs
 
 else
     OFF=`curl -s http://zonsopgang.info|grep Opkomst  |cut -d ">" -f4|cut -d "<" -f1`
     ON=`curl -s http://zonsopgang.info|grep Ondergang|cut -d ">" -f4|cut -d "<" -f1`
-    echo $OFF $ON > /opt/buitenlamp/tijden/$DATE
+    echo $OFF $ON > /opt/tijden/$DATE
 fi
 
 # set "at" to turn the light off and on
