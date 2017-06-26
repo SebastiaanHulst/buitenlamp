@@ -35,5 +35,5 @@ fi
 
 # set "at" to turn the light off and on
 
-echo "/usr/bin/ch4_off.py"| at -m $OFF
-echo "/usr/bin/ch4_on.py" | at -m $ON
+echo "/opt/buitenlamp/ch4_off.py"| at -m $OFF
+echo "/opt/buitenlamp/ch4_on.py" | at -m $ON
