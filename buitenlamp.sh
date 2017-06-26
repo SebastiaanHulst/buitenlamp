@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# buitenlamps script is placed in /opt/buitenlamp
+
 # set date to something usefull for this script
 
 DATE=`date +%m%d`
