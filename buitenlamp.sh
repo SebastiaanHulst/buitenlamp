@@ -1,6 +1,15 @@
 #!/bin/bash
 
+#
 # buitenlamps script is placed in /opt/buitenlamp
+#
+
+# check if root
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+fi
 
 # set date to something usefull for this script
 
