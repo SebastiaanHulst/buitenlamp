@@ -29,7 +29,7 @@ fi
 
 # check if ON and OFF are on local file
 
-if [ -e /opt/tijden/$DATE ]
+if [ -s /opt/tijden/$DATE ]
     then
         OFF=`cat /opt/tijden/$DATE|awk '{print $1}'`
         ON=`cat /opt/tijden/$DATE|awk '{print $2}'`
